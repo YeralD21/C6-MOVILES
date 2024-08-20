@@ -104,7 +104,57 @@
         android:layout_height="wrap_content"
         android:text="="
         app:layout_constraintEnd_toEndOf="@+id/btnsum"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btn6"
+        app:layout_constraintTop_toBottomOf="@+id/btnraiz" />
+
+    <Button
+        android:id="@+id/btnpot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="^"
+        app:layout_constraintBottom_toBottomOf="@+id/btnraiz"
+        app:layout_constraintEnd_toStartOf="@+id/btnPi"
+        app:layout_constraintStart_toEndOf="@+id/btnraiz"
+        app:layout_constraintTop_toTopOf="@+id/btnraiz" />
+
+    <Button
+        android:id="@+id/btnraiz"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="√"
+        app:layout_constraintEnd_toStartOf="@+id/btnpot"
         app:layout_constraintStart_toStartOf="@+id/btn6"
         app:layout_constraintTop_toBottomOf="@+id/btn6" />
+
+    <Button
+        android:id="@+id/btnInv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1/x"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPi"
+        app:layout_constraintEnd_toEndOf="@+id/btnsum"
+        app:layout_constraintStart_toEndOf="@+id/btnPi"
+        app:layout_constraintTop_toTopOf="@+id/btnPi" />
+
+    <Button
+        android:id="@+id/btnPi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="π"
+        app:layout_constraintBottom_toBottomOf="@+id/btnpot"
+        app:layout_constraintEnd_toStartOf="@+id/btnInv"
+        app:layout_constraintStart_toEndOf="@+id/btnpot"
+        app:layout_constraintTop_toTopOf="@+id/btnpot" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="C"
+        app:layout_constraintEnd_toEndOf="@+id/btnigual"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btnigual"
+        app:layout_constraintTop_toBottomOf="@+id/btnigual" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
