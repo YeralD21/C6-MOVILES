@@ -94,6 +94,34 @@ fun ButtonX(
                                 onValueChange.invoke(dot)
                             }
                         }
+                        /*NUEVAS FUNCIONES*/
+
+                        if (valuex.equals("√")) {
+                            if (textState.isNotEmpty() && isNumeric(textState)) {
+                                val number = textState.toDouble()
+                                val result = Math.sqrt(number)
+                                onValueChange.invoke(result.toString())
+                                onIsNewOpChange.invoke(true)
+                            }
+                        }
+
+                        if (valuex.equals("^")) {
+                            onOpChange.invoke(valuex)
+                            onOldValueChange.invoke(textState)
+                            onIsNewOpChange.invoke(true)
+                        }
+
+                        if (valuex.equals("π")) {
+                            onValueChange.invoke(Math.PI.toString())
+                            onIsNewOpChange.invoke(true)
+                        }
+
+                        if (valuex.equals("1/x")) {
+                            val result = 1 / textState.toDouble()
+                            onValueChange.invoke(result.toString())
+                            onIsNewOpChange.invoke(true)
+                        }
+
                         //Aqui =
                         if (valuex.equals("=")) {
                             if (oldTextState.isNotEmpty()) {
@@ -110,6 +138,9 @@ fun ButtonX(
                                     }
                                     "-" -> {
                                         finalNumber = oldTextState.toDouble() - textState.toDouble()
+                                    }
+                                    "^" -> {
+                                        finalNumber = Math.pow(oldTextState.toDouble(), textState.toDouble())
                                     }
                                 }
                                 onValueChange.invoke(finalNumber.toString())
@@ -213,7 +244,7 @@ fun CalcUPeU() {
                 var listB = listOf<String>("7", "8", "9", "*")
                 var listC = listOf<String>("4", "5", "6", "+")
                 var listD = listOf<String>("1", "2", "3", "-")
-                var listE = listOf<String>("√ ", "^", "π", "1/x")
+                var listE = listOf<String>("√", "^", "π", "1/x")
                 var listF = listOf<String>("0", "=")
                 var listaCompleta = listOf<List<String>>(listA, listB, listC, listD, listE, listF)
                 listaCompleta.forEach {
