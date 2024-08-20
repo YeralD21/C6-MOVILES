@@ -26,9 +26,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         textResultado=findViewById(R.id.txtResult)
+        botones()
+
     }
     fun botones(){
         var button= arrayOf(R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btnmul, R.id.btnsum, R.id.btnigual)
+        for (button in buttons){
+            var btn=findViewById<Button>
+        }
     }
 
     fun onClickListener(view:View){
