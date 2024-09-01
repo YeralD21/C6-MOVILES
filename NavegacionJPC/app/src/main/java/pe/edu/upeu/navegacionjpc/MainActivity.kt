@@ -20,6 +20,7 @@ import pe.edu.upeu.navegacionjpc.ui.theme.darkGreenScheme
 import pe.edu.upeu.navegacionjpc.ui.theme.darkRedScheme
 import pe.edu.upeu.navegacionjpc.ui.theme.lightGreenScheme
 import pe.edu.upeu.navegacionjpc.ui.theme.lightRedScheme
+import pe.edu.upeu.navegacionjpc.utils.conttexto
 import pe.edu.upeu.navegacionjpc.utils.isNight
 
 class MainActivity : ComponentActivity() {
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     lightGreenScheme}
                 else->{lightGreenScheme}
             }
-
+            conttexto.CONTEXTO_APPX=this
             NavegacionJPCTheme(colorScheme = colorScheme) {
                 MyAppDrawer(darkMode = darkTheme, themeType = themeType)
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -64,6 +65,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     NavegacionJPCTheme(colorScheme = lightGreenScheme) {
-        Greeting("Android")
+        Greeting("Fabrizio Yerald Sanchez Saravia")
     }
 }
