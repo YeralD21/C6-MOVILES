@@ -65,6 +65,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     NavegacionJPCTheme(colorScheme = lightGreenScheme) {
-        Greeting("Fabrizio Yerald Sanchez Saravia")
+        Greeting("Android")
     }
 }
