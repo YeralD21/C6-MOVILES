@@ -8,14 +8,11 @@ import pe.edu.upeu.asistenciaupeujcn.repository.UsuarioRepository
 import pe.edu.upeu.asistenciaupeujcn.repository.UsuarioRepositoryImp
 import javax.inject.Singleton
 
-class RepositoryModule {
-    @Module
-    @InstallIn(SingletonComponent::class)
-    abstract class RepositoryModule {
-        @Binds
-        @Singleton
-        abstract fun
-                userRepository(userRepos:UsuarioRepositoryImp):UsuarioRepository
-    }
-
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+    @Binds
+    @Singleton
+    abstract fun
+            userRepository(userRepos:UsuarioRepositoryImp):UsuarioRepository
 }

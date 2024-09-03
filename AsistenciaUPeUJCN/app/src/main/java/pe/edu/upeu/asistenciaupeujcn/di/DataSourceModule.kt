@@ -13,38 +13,35 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
+@Module
+@InstallIn(SingletonComponent::class)
 class DataSourceModule {
-    @Module
-    @InstallIn(SingletonComponent::class)
-    class DataSourceModule {
-        var retrofit: Retrofit?=null
-        @Singleton
-        @Provides
-        @Named("BaseUrl")
-        fun provideBaseUrl()=TokenUtils.API_URL
-        @Singleton
-        @Provides
-        fun provideRetrofit(@Named("BaseUrl") baseUrl:String):
-                Retrofit {
-            val okHttpClient= OkHttpClient.Builder()
-                .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .build()
-            if (retrofit==null){
-                retrofit= Retrofit.Builder()
+    var retrofit: Retrofit?=null
+    @Singleton
+    @Provides
+    @Named("BaseUrl")
+    fun provideBaseUrl()=TokenUtils.API_URL
+    @Singleton
+    @Provides
+    fun provideRetrofit(@Named("BaseUrl") baseUrl:String):
+            Retrofit {
+        val okHttpClient= OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build()
+        if (retrofit==null){
+            retrofit= Retrofit.Builder()
 
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(okHttpClient)
-                    .baseUrl(baseUrl).build()
-            }
-            return retrofit!!
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .baseUrl(baseUrl).build()
         }
-        @Singleton
-        @Provides
-        fun restUsuario(retrofit: Retrofit):RestUsuario{
-            return retrofit.create(RestUsuario::class.java)
-        }
+        return retrofit!!
     }
-
+    @Singleton
+    @Provides
+    fun restUsuario(retrofit: Retrofit):RestUsuario{
+        return retrofit.create(RestUsuario::class.java)
+    }
 }
