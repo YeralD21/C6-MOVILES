@@ -14,10 +14,13 @@ interface ActividadDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertarActividad(actividad: Actividad)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertarActividades(actividad: List<Actividad>)
+
     @Update
     suspend fun modificarActividad(actividad: Actividad)
+
     @Delete
     suspend fun eliminarActividad(actividad: Actividad)
 

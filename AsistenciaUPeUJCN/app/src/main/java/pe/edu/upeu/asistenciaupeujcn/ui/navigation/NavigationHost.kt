@@ -15,6 +15,8 @@ import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.Pantalla5
 import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.actividad.ActividadForm
 import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.actividad.ActividadUI
 import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.login.LoginScreen
+import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.qrscreen.ActividadListUI
+import pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.qrscreen.BarcodeScanningScreen
 
 @Composable
 fun NavigationHost(
@@ -62,6 +64,18 @@ fun NavigationHost(
             navBackStackEntry -> var actId=navBackStackEntry.arguments?.getString("actId")
             requireNotNull(actId)
             ActividadForm(text = actId, darkMode = darkMode, navController=navController )
+        }
+
+
+        composable(Destinations.PantallaQRHome.route) {
+            ActividadListUI(navegarListaAct = {
+                navController.navigate(Destinations.RegAsisQRForm.route)
+            }, navController=navController)
+        }
+        composable(Destinations.RegAsisQRForm.route) {
+            BarcodeScanningScreen(
+                navController=navController
+            )
         }
 
 
