@@ -15,6 +15,7 @@ data class UsuarioDto(
     var correo: String,
     var password: String,
 )
+
 data class UsuarioResp(
     val id: Long,
     val nombres: String,
@@ -23,6 +24,5 @@ data class UsuarioResp(
     val token: String,
     val dni: String,
     val perfilPrin: String,
-    val estado: String,
-    val offlinex: String,
+    val estado: String,val offlinex: String,
 )

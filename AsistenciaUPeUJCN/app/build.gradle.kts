@@ -1,5 +1,4 @@
 plugins {
-
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt") //Agregado
@@ -21,6 +20,18 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+                // arguments += ["room.schemaLocation":
+                //"$projectDir/schemas".toString()]
+            }
+        }
+
     }
 
     buildTypes {
@@ -70,32 +81,42 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Navegacion
+//Navegacion
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+//Agregados Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.52") //old 2.47
+    kapt ("com.google.dagger:hilt-compiler:2.52") //old 2.47
+//Agregado Dagger - Hilt Compose
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") //old 1.0.0
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1") //old 1.0.5
+    implementation ("io.coil-kt:coil-compose:2.7.0") //old 2.4.0
+//Agregado LiveData compose//implementation ("androidx.compose.ui:ui-tooling")
+    implementation ("androidx.compose.foundation:foundation")
+    implementation ("androidx.compose.runtime:runtime-livedata")
+//Formularios
+    implementation ("com.github.k0shk0sh:compose-easyforms:0.2.0")
+// Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+//App Compact para detectar modo dia noche
+    val appcompat_version = "1.7.0" //old 1.6.1
+    implementation("androidx.appcompat:appcompat:$appcompat_version")//Agregado recien
 
-    // Agregados Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.52")
-    kapt("com.google.dagger:hilt-compiler:2.52")
-
-    // Agregado Dagger - Hilt Compose
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1")
-    implementation("io.coil-kt:coil-compose:2.7.0")
-
-    // Agregado LiveData compose
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.runtime:runtime-livedata")
-
-    // Formularios
-    implementation("com.github.k0shk0sh:compose-easyforms:0.2.0")
-
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-
-    // App Compact para detectar modo día/noche
-    val appcompat_version = "1.7.0"
-    implementation("androidx.appcompat:appcompat:$appcompat_version")
+//Room
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+// To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+// optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+//Manager permissions
+    implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
+//Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+//Location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
 }

@@ -8,5 +8,5 @@ import retrofit2.http.POST
 
 interface RestUsuario {
     @POST("/asis/login")
-    suspend fun login(@Body user:UsuarioDto):Response<UsuarioResp>
+    suspend fun login(@Body user:UsuarioDto): Response<UsuarioResp>
 }
