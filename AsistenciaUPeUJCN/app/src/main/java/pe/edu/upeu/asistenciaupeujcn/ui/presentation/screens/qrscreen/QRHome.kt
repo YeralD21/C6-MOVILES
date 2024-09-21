@@ -1,5 +1,6 @@
 package pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.qrscreen
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PointF
@@ -13,33 +14,39 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.MutableState
+
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toComposeRect
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,6 +60,7 @@ import pe.edu.upeu.asistenciaupeujcn.utils.adjustPoint
 import pe.edu.upeu.asistenciaupeujcn.utils.adjustSize
 import pe.edu.upeu.asistenciaupeujcn.utils.drawBounds
 import java.util.concurrent.Executors
+
 
 @Composable
 fun BarcodeScanningScreen(
@@ -69,18 +77,19 @@ fun ScanSurface( navController: NavController, viewModel: QRViewModel) {
     val detectedBarcodes by viewModel.detectedBarcodes.observeAsState(emptyList())
     val imageWidth by viewModel.imageWidth.observeAsState(0)
     val imageHeight by viewModel.imageHeight.observeAsState(0)
-// Observa el estado de la inserción
+
+    // Observa el estado de la inserción
     val insertStatus by viewModel.insertStatus.observeAsState(null)
-    val screenWidth = remember {
-        mutableStateOf(context.resources.displayMetrics.widthPixels) }
-    val screenHeight = remember {
-        mutableStateOf(context.resources.displayMetrics.heightPixels) }
+
+    val screenWidth = remember { mutableStateOf(context.resources.displayMetrics.widthPixels) }
+    val screenHeight = remember { mutableStateOf(context.resources.displayMetrics.heightPixels) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         CameraView(
             context = context,
             lifecycleOwner = lifecycleOwner,
             analyzer = BarcodeScanningAnalyzer { barcodes, width, height ->
-                viewModel.updateBarcodes(barcodes, width, height)
+                viewModel.updateBarcodes(barcodes, width, height)  // Actualiza el ViewModel con los códigos detectados
             }
         )
         Column(
@@ -108,12 +117,14 @@ fun ScanSurface( navController: NavController, viewModel: QRViewModel) {
                     color = Color.White
                 )
             }
-// Mostrar mensaje de estado basado en la inserción
+
+            // Mostrar mensaje de estado basado en la inserción
             if (insertStatus != null) {
                 val message = if (insertStatus == true) {
                     "Código registrado correctamente"
                 } else {
-                    "Error al registrar el código"}
+                    "Error al registrar el código"
+                }
                 Text(
                     text = message,
                     style = MaterialTheme.typography.bodyMedium,
@@ -122,19 +133,18 @@ fun ScanSurface( navController: NavController, viewModel: QRViewModel) {
                         .padding(10.dp)
                 )
             }
+
             Card(
                 shape = RoundedCornerShape(12.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-                colors = CardDefaults.cardColors(containerColor =
-                MaterialTheme.colorScheme.primaryContainer),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
                     .padding(vertical = 50.dp),
             ) {
                 Text(
-                    text = detectedBarcodes.joinToString(separator = "\n") {
-                        it.displayValue.toString() },
+                    text = detectedBarcodes.joinToString(separator = "\n") { it.displayValue.toString() },
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .padding(horizontal = 10.dp)
@@ -153,16 +163,12 @@ fun ScanSurface( navController: NavController, viewModel: QRViewModel) {
 }
 
 @Composable
-fun DrawBarcode(barcodes: List<Barcode>, imageWidth: Int,
-                imageHeight: Int, screenWidth: Int, screenHeight: Int) {
+fun DrawBarcode(barcodes: List<Barcode>, imageWidth: Int, imageHeight: Int, screenWidth: Int, screenHeight: Int) {
     Canvas(modifier = Modifier.fillMaxSize()) {
         barcodes.forEach { barcode ->
             barcode.boundingBox?.toComposeRect()?.let {
-                val topLeft =
-                    adjustPoint(PointF(it.topLeft.x, it.topLeft.y), imageWidth,
-                        imageHeight, screenWidth, screenHeight)
-                val size = adjustSize(it.size, imageWidth,
-                    imageHeight, screenWidth, screenHeight)
+                val topLeft = adjustPoint(PointF(it.topLeft.x, it.topLeft.y), imageWidth, imageHeight, screenWidth, screenHeight)
+                val size = adjustSize(it.size, imageWidth, imageHeight, screenWidth, screenHeight)
                 drawBounds(topLeft, size, Color.Yellow, 10f)
             }
         }
@@ -175,8 +181,7 @@ fun CameraView(
     analyzer: ImageAnalysis.Analyzer,
     lifecycleOwner: LifecycleOwner
 ) {
-    val cameraProviderFuture = remember {
-        ProcessCameraProvider.getInstance(context) }
+    val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     AndroidView(
         modifier = Modifier
@@ -198,6 +203,7 @@ fun CameraView(
                 val cameraSelector = CameraSelector.Builder()
                     .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                     .build()
+
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
                     lifecycleOwner,
@@ -211,23 +217,19 @@ fun CameraView(
     )
 }
 
-
 @SuppressLint("UnsafeOptInUsageError")
 class BarcodeScanningAnalyzer(
-    private val onBarcodeDetected: (barcodes: List<Barcode>, width: Int,
-                                    height: Int) -> Unit
+    private val onBarcodeDetected: (barcodes: List<Barcode>, width: Int, height: Int) -> Unit
 ) : ImageAnalysis.Analyzer {
     private val options = BarcodeScannerOptions.Builder().build()
     private val scanner = BarcodeScanning.getClient(options)
     override fun analyze(imageProxy: ImageProxy) {
         try {
             imageProxy.image?.let {
-                val imageValue = InputImage.fromMediaImage(it,
-                    imageProxy.imageInfo.rotationDegrees)
+                val imageValue = InputImage.fromMediaImage(it, imageProxy.imageInfo.rotationDegrees)
                 scanner.process(imageValue)
                     .addOnSuccessListener { barcodes ->
-                        onBarcodeDetected(barcodes, imageValue.height,
-                            imageValue.width)
+                        onBarcodeDetected(barcodes, imageValue.height, imageValue.width)
                     }
                     .addOnFailureListener { failure ->
                         failure.printStackTrace() // Log the error

@@ -24,10 +24,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DataSourceModule {
     var retrofit: Retrofit?=null
+
     @Singleton
     @Provides
     @Named("BaseUrl")
     fun provideBaseUrl()=TokenUtils.API_URL
+
     @Singleton
     @Provides
     fun provideRetrofit(@Named("BaseUrl") baseUrl:String):
@@ -39,6 +41,7 @@ class DataSourceModule {
             .build()
         if (retrofit==null){
             retrofit= Retrofit.Builder()
+
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .baseUrl(baseUrl).build()
@@ -56,7 +59,6 @@ class DataSourceModule {
     fun restActividad(retrofit: Retrofit):RestActividad{
         return retrofit.create(RestActividad::class.java)
     }
-
     @Singleton
     @Provides
     fun restAsistenciax(retrofit: Retrofit): RestAsistenciax {
@@ -64,20 +66,19 @@ class DataSourceModule {
     }
 
 
+
     @Singleton
     @Provides
-    fun dbDataSource(@ApplicationContext context:Context):DbDataSource{
+    fun dbDataSource(@ApplicationContext
+                     context:Context):DbDataSource{
         return Room.databaseBuilder(context,
             DbDataSource::class.java,
             "eventoasistencia_db")
-            .fallbackToDestructiveMigration().build()}
-
-
+            .fallbackToDestructiveMigration().build()
+    }
     @Singleton
     @Provides
     fun actividadDao(db:DbDataSource):ActividadDao{
         return db.actividadDao()
     }
-
-
 }

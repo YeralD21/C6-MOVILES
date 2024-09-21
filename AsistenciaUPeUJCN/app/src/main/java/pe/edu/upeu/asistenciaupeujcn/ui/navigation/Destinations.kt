@@ -13,18 +13,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class Destinations(
     val route: String,
     val title: String,
-    val icon: ImageVector) {
+    val icon: ImageVector
+) {
     object Login:Destinations("login", "Login",
         Icons.Filled.Settings)
     object Pantalla1 : Destinations( "pantalla1", "Pantalla 1", Icons.Filled.Home )
-    object Pantalla2 :
+        object Pantalla2 :
             Destinations("pantalla2/?newText={newText}", "Pantalla 2",
                 Icons.Filled.Settings) {
-            fun createRoute(newText: String) = "pantalla2/?newText=$newText"
+            fun createRoute(newText: String) =
+                "pantalla2/?newText=$newText"
         }
-    object Pantalla3 : Destinations("pantalla3", "Pantalla 3", Icons.Filled.Favorite)
-    object Pantalla4 : Destinations("pantalla4", "Pantalla 4x", Icons.Filled.Face )
-    object Pantalla5 : Destinations("pantalla5", "Pantalla 5x", Icons.Filled.AccountCircle )
+        object Pantalla3 : Destinations("pantalla3", "Pantalla 3", Icons.Filled.Favorite)
+            object Pantalla4 : Destinations("pantalla4", "Pantalla 4x", Icons.Filled.Face )
+                object Pantalla5 : Destinations("pantalla5", "Pantalla 5x", Icons.Filled.AccountCircle )
 
     object ActividadUI: Destinations("actividadUI","Adm. Actividades", Icons.Filled.DateRange)
         object ActividadForm:
@@ -34,7 +36,6 @@ sealed class Destinations(
                 return "actividadForm?actId=$actId"
             }
         }
-
 
     object PantallaQRHome : Destinations("ListaActividadQR",
         "Reg. Asis. QR", Icons.Filled.AccountCircle )

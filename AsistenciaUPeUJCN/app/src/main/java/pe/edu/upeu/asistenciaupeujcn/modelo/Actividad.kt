@@ -16,8 +16,7 @@ data class Actividad(
     var estado: String,
     var evaluar: String,
     var userCreate: String,
-    var mater: String,
-    var validInsc: String,
+    var mater: String,var validInsc: String,
     var asisSubact: String,
     var entsal: String,
     var offlinex: String

@@ -66,7 +66,11 @@ fun ActividadForm(
         actividadD,
         viewModel
     )
+
 }
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "MissingPermission",
     "CoroutineCreationDuringComposition"
@@ -77,10 +81,12 @@ fun formulario(id:Long,
                navController: NavHostController,
                actividad: Actividad,
                viewModel: ActividadFormViewModel){
+
     Log.i("VERRR", "d: "+actividad?.id!!)
     val person= Actividad(0,"","", "","","","","","","","", "", "", "", "")
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
     var locationCallback: LocationCallback? = null
     var fusedLocationClient: FusedLocationProviderClient? = null
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(
@@ -91,7 +97,8 @@ fun formulario(id:Long,
                 Log.e("LATLONX", "Lat: ${lo.latitude} Lon: ${lo.longitude}")
                 person.latitud=lo.latitude.toString()
                 person.longitud=lo.longitude.toString()
-            }}
+            }
+        }
     }
     scope.launch{
         val locationRequest = LocationRequest.create().apply {
@@ -99,70 +106,59 @@ fun formulario(id:Long,
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-        fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback,
-            Looper.getMainLooper())
+        fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+
         Log.e("LATLON", "Lat: ${person.latitud} Lon: ${person.longitud}")
         delay(1500L)
         if (fusedLocationClient != null) {
             fusedLocationClient!!.removeLocationUpdates(locationCallback);
             fusedLocationClient = null;
         }
+
     }
-    Scaffold(modifier = Modifier.padding(top = 80.dp, start = 16.dp, end = 16.dp, bottom =
-    32.dp)){
+
+    Scaffold(modifier = Modifier.padding(top = 80.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)){
         BuildEasyForms { easyForm ->
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                NameTextField(easyForms = easyForm, text=actividad?.nombreActividad!!,"Nomb. Actividad:", MyFormKeys.NAME )
+                NameTextField(easyForms = easyForm, text =actividad?.nombreActividad!!,"Nomb. Actividad:", MyFormKeys.NAME )
                 var listE = listOf(
                     ComboModel("Activo","Activo"),
                     ComboModel("Desactivo","Desactivo"),
                 )
                 ComboBox(easyForm = easyForm, "Estado:", actividad?.estado!!, listE)
+
                 var listEv = listOf(
                     ComboModel("SI","SI"),
                     ComboModel("NO","NO"),
                 )
                 ComboBoxTwo(easyForm = easyForm, "Evaluar:", actividad?.evaluar!!, listEv)
-                DatePickerCustom(easyForm = easyForm, label = "Fecha", texts =
-                actividad?.fecha!!, MyFormKeys.FECHA,"yyyy-MM-dd")
-                TimePickerCustom(easyForm = easyForm, label = "Hora", texts =
-                actividad?.horai!!, MyFormKeys.TIME, "HH:mm:ss")
-                TimePickerCustom(easyForm = easyForm, label = "Min. Toler", texts =
-                actividad?.minToler!!, MyFormKeys.TIME_TOLER,"HH:mm:ss")
-                NameTextField(easyForms = easyForm, text = actividad?.mater!!,
-                    "Materiales:", MyFormKeys.MATERIALES )
-                DropdownMenuCustom(easyForm = easyForm, label = "Validar Inscripcion:",
-                    actividad.validInsc, list =listEv, MyFormKeys.VALIDINSCRIP )
-                DropdownMenuCustom(easyForm = easyForm, label = "Validar Asis.SubActividad:", actividad.asisSubact, list =listEv, MyFormKeys.ASISSUBACT )
-                        DropdownMenuCustom(easyForm = easyForm, label = "Reg. Entrada y Salida:",
-                    actividad.entsal, list =listEv, MyFormKeys.ENTSAL )
-                DropdownMenuCustom(easyForm = easyForm, label = "Reg. Offline:",
-                    actividad.offlinex, list =listEv, MyFormKeys.OFFLINE )
+
+
+                DatePickerCustom(easyForm = easyForm, label = "Fecha", texts = actividad?.fecha!!, MyFormKeys.FECHA,"yyyy-MM-dd")
+                TimePickerCustom(easyForm = easyForm, label = "Hora", texts = actividad?.horai!!, MyFormKeys.TIME, "HH:mm:ss")
+                TimePickerCustom(easyForm = easyForm, label = "Min. Toler", texts = actividad?.minToler!!, MyFormKeys.TIME_TOLER,"HH:mm:ss")
+                NameTextField(easyForms = easyForm, text = actividad?.mater!!, "Materiales:", MyFormKeys.MATERIALES )
+                DropdownMenuCustom(easyForm = easyForm, label = "Validar Inscripcion:", actividad.validInsc, list =listEv, MyFormKeys.VALIDINSCRIP )
+                DropdownMenuCustom(easyForm = easyForm, label = "Validar Asis. SubActividad:", actividad.asisSubact, list =listEv, MyFormKeys.ASISSUBACT )
+                DropdownMenuCustom(easyForm = easyForm, label = "Reg. Entrada y Salida:", actividad.entsal, list =listEv, MyFormKeys.ENTSAL )
+                DropdownMenuCustom(easyForm = easyForm, label = "Reg. Offline:", actividad.offlinex, list =listEv, MyFormKeys.OFFLINE )
+
                 Row(Modifier.align(Alignment.CenterHorizontally)){
                     AccionButtonSuccess(easyForms = easyForm, "Guardar", id){
                         val lista=easyForm.formData()
-                        person.nombreActividad=(lista.get(0) as
-                                EasyFormsResult.StringResult).value
-                        person.estado=splitCadena((lista.get(1) as
-                                EasyFormsResult.GenericStateResult<String>).value)
-                        person.evaluar=splitCadena((lista.get(2) as
-                                EasyFormsResult.GenericStateResult<String>).value)
-                        person.fecha=(lista.get(3) as
-                                EasyFormsResult.GenericStateResult<String>).value
-                        person.horai=(lista.get(4) as
-                                EasyFormsResult.GenericStateResult<String>).value
-                        person.minToler=(lista.get(5) as
-                                EasyFormsResult.GenericStateResult<String>).value
+                        person.nombreActividad=(lista.get(0) as EasyFormsResult.StringResult).value
+                        person.estado=splitCadena((lista.get(1) as EasyFormsResult.GenericStateResult<String>).value)
+                        person.evaluar=splitCadena((lista.get(2) as EasyFormsResult.GenericStateResult<String>).value)
+                        person.fecha=(lista.get(3) as EasyFormsResult.GenericStateResult<String>).value
+                        person.horai=(lista.get(4) as EasyFormsResult.GenericStateResult<String>).value
+                        person.minToler=(lista.get(5) as EasyFormsResult.GenericStateResult<String>).value
                         person.mater=(lista.get(6) as EasyFormsResult.StringResult).value
-                        person.validInsc= splitCadena((lista.get(7) as
-                                EasyFormsResult.GenericStateResult<String>).value)
-                        person.asisSubact= splitCadena((lista.get(8) as
-                                EasyFormsResult.GenericStateResult<String>).value)
-                        person.entsal= splitCadena((lista.get(9) as
-                                EasyFormsResult.GenericStateResult<String>).value)
-                        person.offlinex= splitCadena((lista.get(10) as
-                                EasyFormsResult.GenericStateResult<String>).value)
+                        person.validInsc= splitCadena((lista.get(7) as EasyFormsResult.GenericStateResult<String>).value)
+                        person.asisSubact= splitCadena((lista.get(8) as EasyFormsResult.GenericStateResult<String>).value)
+                        person.entsal= splitCadena((lista.get(9) as EasyFormsResult.GenericStateResult<String>).value)
+                        person.offlinex= splitCadena((lista.get(10) as EasyFormsResult.GenericStateResult<String>).value)
                         person.userCreate= TokenUtils.USER_LOGIN
+
                         if (id==0.toLong()){
                             Log.i("AGREGAR", "M:"+ person.mater)
                             Log.i("AGREGAR", "VI:"+ person.validInsc)
@@ -186,6 +182,8 @@ fun formulario(id:Long,
         }
     }
 }
+
+
 fun splitCadena(data:String):String{
     return if(data!="") data.split("-")[0] else ""
 }

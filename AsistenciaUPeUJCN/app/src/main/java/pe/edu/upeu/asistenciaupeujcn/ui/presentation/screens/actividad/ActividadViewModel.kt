@@ -22,17 +22,13 @@ class ActividadViewModel @Inject constructor(
     val activ: LiveData<List<Actividad>> by lazy {
         activRepo.reportarActividades()
     }
-
     val isLoading: LiveData<Boolean> get() = _isLoading
-
-
     fun addActividad() {
         if (_isLoading.value == false)
-            viewModelScope.launch (Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.IO) {
                 _isLoading.postValue(true)
             }
     }
-
     fun deleteActividad(toDelete: Actividad) {
         viewModelScope.launch(Dispatchers.IO) {
             Log.i("ELIMAR", toDelete.toString())

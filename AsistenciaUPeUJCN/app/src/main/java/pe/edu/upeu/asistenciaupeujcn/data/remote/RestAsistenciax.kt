@@ -15,20 +15,17 @@ import retrofit2.http.Query
 
 interface RestAsistenciax {
     @GET("/asis/asistenciax/list")
-    suspend fun reportarAsistenciax(@Header("Authorization")
-                                    token:String): Response<List<Asistenciax>>
+    suspend fun reportarAsistenciax(@Header("Authorization") token:String): Response<List<AsistenciaxResp>>
+
     @GET("/asis/asistenciax/buscar/{id}")
-    suspend fun getAsistenciaxId(@Header("Authorization") token:String,
-                                 @Query("id") id:Long): Response<Asistenciax>
+    suspend fun getAsistenciaxId(@Header("Authorization") token:String, @Query("id") id:Long): Response<Asistenciax>
+
     @DELETE("/asis/asistenciax/eliminar/{id}")
-    suspend fun deleteAsistenciax(@Header("Authorization") token:String,
-                                  @Path("id") id:Long): Response<MsgGeneric>
+    suspend fun deleteAsistenciax(@Header("Authorization") token:String, @Path("id") id:Long): Response<MsgGeneric>
+
     @PUT("/asis/asistenciax/editar/{id}")
-    suspend fun actualizarAsistenciax(@Header("Authorization")
-                                      token:String, @Path("id") id:Long, @Body asistenciax: Asistenciax
+    suspend fun actualizarAsistenciax(@Header("Authorization") token:String, @Path("id") id:Long, @Body asistenciax: Asistenciax
     ): Response<Asistenciax>
     @POST("/asis/asistenciax/crear")
-    suspend fun insertarAsistenciax(@Header("Authorization")
-                                    token:String,@Body asistenciax: Asistenciax
-    ): Response<AsistenciaxResp>
+    suspend fun insertarAsistenciax(@Header("Authorization") token:String,@Body asistenciax: Asistenciax): Response<AsistenciaxResp>
 }

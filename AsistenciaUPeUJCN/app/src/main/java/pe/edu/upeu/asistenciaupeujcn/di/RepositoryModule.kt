@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Binds
     @Singleton
     abstract fun userRepository(userRepos:UsuarioRepositoryImp):UsuarioRepository
@@ -27,5 +26,4 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun asistenciaxRepository(actRepos: AsistenciaxRepositoryImp): AsistenciaxRepository
-
 }

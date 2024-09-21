@@ -43,7 +43,7 @@ public val LightPurpleColors = lightColorScheme(
     secondary = purple_theme_light_secondary,
     onSecondary = purple_theme_light_onSecondary,
     secondaryContainer =purple_theme_light_secondaryContainer,
-    onSecondaryContainer = purple_theme_light_onSecondaryContainer,
+    onSecondaryContainer =purple_theme_light_onSecondaryContainer,
     tertiary = purple_theme_light_tertiary,
     onTertiary = purple_theme_light_onTertiary,
     tertiaryContainer = purple_theme_light_tertiaryContainer,
@@ -70,8 +70,7 @@ public val DarkPurpleColors = darkColorScheme(
     primary = purple_theme_dark_primary,
     onPrimary = purple_theme_dark_onPrimary,
     primaryContainer = purple_theme_dark_primaryContainer,
-    onPrimaryContainer =
-    purple_theme_dark_onPrimaryContainer,
+    onPrimaryContainer =purple_theme_dark_onPrimaryContainer,
     secondary = purple_theme_dark_secondary,
     onSecondary = purple_theme_dark_onSecondary,
     secondaryContainer =purple_theme_dark_secondaryContainer,
@@ -132,12 +131,12 @@ public val LightRedColors = lightColorScheme(
 public val DarkRedColors = darkColorScheme(
     primary = red_theme_dark_primary,
     onPrimary = red_theme_dark_onPrimary,
-    primaryContainer =red_theme_dark_primaryContainer,
+    primaryContainer = red_theme_dark_primaryContainer,
     onPrimaryContainer =red_theme_dark_onPrimaryContainer,
     secondary = red_theme_dark_secondary,
     onSecondary = red_theme_dark_onSecondary,
     secondaryContainer = red_theme_dark_secondaryContainer,
-    onSecondaryContainer =red_theme_dark_onSecondaryContainer,
+    onSecondaryContainer = red_theme_dark_onSecondaryContainer,
     tertiary = red_theme_dark_tertiary,
     onTertiary = red_theme_dark_onTertiary,
     tertiaryContainer = red_theme_dark_tertiaryContainer,
@@ -172,7 +171,7 @@ public val LightGreenColors = lightColorScheme(
     tertiary = green_theme_light_tertiary,
     onTertiary = green_theme_light_onTertiary,
     tertiaryContainer = green_theme_light_tertiaryContainer,
-    onTertiaryContainer = green_theme_light_onTertiaryContainer,
+    onTertiaryContainer =green_theme_light_onTertiaryContainer,
     error = green_theme_light_error,
     errorContainer = green_theme_light_errorContainer,
     onError = green_theme_light_onError,
@@ -222,6 +221,7 @@ public val DarkGreenColors = darkColorScheme(
     outlineVariant = green_theme_dark_outlineVariant,
     scrim = green_theme_dark_scrim,
 )
+
 
 @Composable
 fun AsistenciaUPeUJCNTheme(

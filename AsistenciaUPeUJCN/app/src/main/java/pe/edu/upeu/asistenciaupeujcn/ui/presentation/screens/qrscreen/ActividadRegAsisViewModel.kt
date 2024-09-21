@@ -1,5 +1,6 @@
 package pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.qrscreen
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,9 +10,10 @@ import pe.edu.upeu.asistenciaupeujcn.repository.ActividadRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ActividadRegAsisViewModel @Inject constructor(
+class ActividadRegAsisViewModel@Inject constructor(
     private val activRepo: ActividadRepository,
 ): ViewModel() {
+
     private val _isLoading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
     }

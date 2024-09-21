@@ -22,19 +22,16 @@ interface ActividadRepository {
 }
 
 
-
 class ActividadRepositoryImp @Inject constructor(
     private val restActividad: RestActividad,
     private val actividadDao: ActividadDao
 ): ActividadRepository{
-
     override suspend fun deleteActividad(actividad: Actividad){
         CoroutineScope(Dispatchers.IO).launch {
             restActividad.deleteActividad(TokenUtils.TOKEN_CONTENT,actividad.id)
         }
         actividadDao.eliminarActividad(actividad)
     }
-
     override fun reportarActividades(): LiveData<List<Actividad>> {
         try {
             CoroutineScope(Dispatchers.IO).launch{
@@ -49,25 +46,20 @@ class ActividadRepositoryImp @Inject constructor(
         }
         return actividadDao.reportatActividad()
     }
-
-
-
-
-
-    override fun buscarActividadId(id:Long): LiveData<Actividad> {return actividadDao.buscarActividad(id)
+    override fun buscarActividadId(id:Long): LiveData<Actividad> {
+        return actividadDao.buscarActividad(id)
     }
-
     override suspend fun insertarActividad(actividad: Actividad):Boolean{
         return restActividad.insertarActividad(TokenUtils.TOKEN_CONTENT,
             actividad).body()!=null
     }
-
     override suspend fun modificarRemoteActividad(actividad:
                                                   Actividad):Boolean{
         var dd:Boolean=false
         CoroutineScope(Dispatchers.IO).launch {
             Log.i("VER", TokenUtils.TOKEN_CONTENT)
         }
-        return restActividad.actualizarActividad(TokenUtils.TOKEN_CONTENT, actividad.id, actividad).body()!=null
+        return restActividad.actualizarActividad(TokenUtils.TOKEN_CONTENT, actividad.id,
+            actividad).body()!=null
     }
 }

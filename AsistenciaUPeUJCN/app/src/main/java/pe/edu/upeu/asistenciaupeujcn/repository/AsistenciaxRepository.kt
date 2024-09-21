@@ -9,13 +9,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pe.edu.upeu.asistenciaupeujcn.data.remote.RestAsistenciax
 import pe.edu.upeu.asistenciaupeujcn.modelo.Asistenciax
+import pe.edu.upeu.asistenciaupeujcn.modelo.AsistenciaxResp
 import pe.edu.upeu.asistenciaupeujcn.utils.TokenUtils
 import pe.edu.upeu.asistenciaupeujcn.utils.isNetworkAvailable
 import javax.inject.Inject
 
 interface AsistenciaxRepository {
     suspend fun deleteAsistenciax(asistenciax: Asistenciax)
-    fun reportarAsistenciax(): LiveData<List<Asistenciax>>
+    fun reportarAsistenciax(): LiveData<List<AsistenciaxResp>>
     fun buscarAsistenciaxId(id:Long): LiveData<Asistenciax>
     suspend fun insertarAsistenciax(asistenciax: Asistenciax):Boolean
     suspend fun modificarAsistenciax(asistenciax:Asistenciax):Boolean
@@ -31,12 +32,12 @@ class AsistenciaxRepositoryImp @Inject constructor(
             )
         }
     }
-    override fun reportarAsistenciax(): LiveData<List<Asistenciax>> {
-        lateinit var data: List<Asistenciax>
+
+    override fun reportarAsistenciax(): LiveData<List<AsistenciaxResp>> {
+        lateinit var data: List<AsistenciaxResp>
         val _asistenciaListLiveData =
-            MutableLiveData<List<Asistenciax>>()
-        val asistenciaListLiveData: LiveData<List<Asistenciax>> =
-            _asistenciaListLiveData
+            MutableLiveData<List<AsistenciaxResp>>()
+        val asistenciaListLiveData: LiveData<List<AsistenciaxResp>> =_asistenciaListLiveData
         try {
             CoroutineScope(Dispatchers.IO).launch{
                 delay(3000)

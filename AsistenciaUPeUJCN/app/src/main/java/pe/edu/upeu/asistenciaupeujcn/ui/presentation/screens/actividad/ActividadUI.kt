@@ -60,13 +60,13 @@ import pe.edu.upeu.asistenciaupeujcn.utils.TokenUtils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+
 @Composable
 fun ActividadUI (navegarEditarAct: (String) -> Unit, viewModel:
 ActividadViewModel= hiltViewModel(), navController: NavHostController
 ){
     val actis by viewModel.activ.observeAsState(arrayListOf())
     val isLoading by viewModel.isLoading.observeAsState(false)
-
     Log.i("VERX", ""+actis!!.size )
     MyApp(navController, onAddClick = {
 //viewModel.addUser()
@@ -80,7 +80,6 @@ ActividadViewModel= hiltViewModel(), navController: NavHostController
         }
     )
 }
-
 
 val formatoFecha: DateTimeFormatter? = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -117,8 +116,8 @@ fun MyApp( navController: NavHostController,
         FabItem(
             Icons.Filled.Favorite,
             "Add Actvidad"
-        ) { onAddClick?.invoke() })
-
+        ) { onAddClick?.invoke() }
+    )
     Scaffold(
         bottomBar = {
             BottomAppBar {
@@ -140,16 +139,15 @@ fun MyApp( navController: NavHostController,
             LazyColumn(modifier = Modifier
                 .padding(top = 80.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
                 .align(alignment = Alignment.TopCenter),
-                //.offset(x = (16).dp, y = (-32).dp),
+//.offset(x = (16).dp, y = (-32).dp),
                 userScrollEnabled= true,
             ){
                 var itemCount = actividades.size
                 if (isLoading) itemCount++
                 items(count = itemCount) { index ->
                     var auxIndex = index;
-                    if (isLoading) {
-                        if (auxIndex == 0)
-                            return@items LoadingCard()
+                    if (isLoading) {if (auxIndex == 0)
+                        return@items LoadingCard()
                         auxIndex--
                     }
                     val actividad = actividades[auxIndex]
@@ -164,8 +162,7 @@ fun MyApp( navController: NavHostController,
                     ) {
                         Row(modifier = Modifier.padding(8.dp)) {
                             Image(
-                                modifier = Modifier
-                                    .size(50.dp)
+                                modifier = Modifier.size(50.dp)
 //.clip(CircleShape)
                                     .clip(RoundedCornerShape(8.dp)),
                                 painter = rememberImagePainter(
@@ -187,7 +184,8 @@ fun MyApp( navController: NavHostController,
                                 val datex = LocalDate.parse(actividad.fecha!!,
                                     DateTimeFormatter.ISO_DATE)
                                 var fecha=formatoFecha?.format(datex)
-                                Text(""+fecha, color =MaterialTheme.colorScheme.primary)
+                                Text(""+fecha, color =
+                                MaterialTheme.colorScheme.primary)
                             }
                             Spacer()
                             val showDialog = remember { mutableStateOf(false) }
@@ -215,8 +213,7 @@ fun MyApp( navController: NavHostController,
                                 onEditClick?.invoke(actividad)
                             }) {
                                 Icon(
-                                    Icons.Filled.Edit,
-                                    contentDescription = "Editar",
+                                    Icons.Filled.Edit,contentDescription = "Editar",
                                     tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
@@ -227,4 +224,3 @@ fun MyApp( navController: NavHostController,
         }
     }
 }
-

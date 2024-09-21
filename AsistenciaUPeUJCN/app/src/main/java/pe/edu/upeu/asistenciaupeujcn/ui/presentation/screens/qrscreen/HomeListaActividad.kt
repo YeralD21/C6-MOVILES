@@ -1,6 +1,7 @@
 package pe.edu.upeu.asistenciaupeujcn.ui.presentation.screens.qrscreen
 
 import android.annotation.SuppressLint
+
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -45,14 +47,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ActividadListUI(navegarListaAct: (String) -> Unit,
-                    viewModel:
-                    ActividadRegAsisViewModel = hiltViewModel(), navController: NavHostController
+fun ActividadListUI(navegarListaAct: (String) -> Unit, viewModel:
+ActividadRegAsisViewModel = hiltViewModel(), navController: NavHostController
 ){
     val actis by viewModel.activ.observeAsState(arrayListOf())
-    val isLoading by  viewModel.isLoading.observeAsState(false)
-    MyApp(navController, onAddClick = {
-        navegarListaAct((0).toString())},
+    val isLoading by viewModel.isLoading.observeAsState(false)
+    MyApp(navController, onAddClick = { navegarListaAct((0).toString())},
         actis,
         isLoading,
         onEditClick = {
@@ -62,7 +62,6 @@ fun ActividadListUI(navegarListaAct: (String) -> Unit,
         }
     )
 }
-
 
 val formatoFecha: DateTimeFormatter? = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -82,8 +81,7 @@ fun MyApp(navController: NavHostController,
     Scaffold(
         bottomBar = {
             BottomAppBar {
-                BottomNavigationBar(navigationItems2, navController =
-                navController)
+                BottomNavigationBar(navigationItems2, navController = navController)
             }
         },
         modifier = Modifier,
@@ -117,7 +115,7 @@ fun MyApp(navController: NavHostController,
                             Image(
                                 modifier = Modifier
                                     .size(50.dp)
-//.clip(CircleShape)
+                                    //.clip(CircleShape)
                                     .clip(RoundedCornerShape(8.dp)),
                                 painter = rememberImagePainter(
                                     data = actividad.evaluar,
@@ -125,28 +123,28 @@ fun MyApp(navController: NavHostController,
                                         placeholder(R.drawable.bg)
                                         error(R.drawable.bg)
                                     }
-                                ),contentDescription = null,
+                                ),
+                                contentDescription = null,
                                 contentScale = ContentScale.FillHeight
                             )
                             Spacer()
                             Column(
                                 Modifier.weight(1f),
                             ) {
-                                Text("${actividad.nombreActividad} -${actividad.estado}", fontWeight = FontWeight.Bold)
-                                val datex = LocalDate.parse(actividad.fecha!!,
-                                    DateTimeFormatter.ISO_DATE)
+                                Text("${actividad.nombreActividad} - ${actividad.estado}", fontWeight = FontWeight.Bold)
+                                val datex = LocalDate.parse(actividad.fecha!!, DateTimeFormatter.ISO_DATE)
                                 var fecha=formatoFecha?.format(datex)
                                 Text(""+fecha, color =
                                 MaterialTheme.colorScheme.primary)
                             }
+
                             IconButton(onClick = {
                                 Log.i("VERTOKEN", "Holas")
                                 Log.i("VERTOKEN", TokenUtils.TOKEN_CONTENT)
                                 onEditClick?.invoke(actividad)
                             }) {
                                 Icon(
-                                    painter = painterResource(id =
-                                    R.drawable.qr),
+                                    painter = painterResource(id = R.drawable.qrimage),
                                     contentDescription = "QR",
                                     tint = MaterialTheme.colorScheme.secondary
                                 )

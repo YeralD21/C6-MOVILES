@@ -31,7 +31,6 @@ android {
                 //"$projectDir/schemas".toString()]
             }
         }
-
     }
 
     buildTypes {
@@ -84,14 +83,15 @@ dependencies {
 //Navegacion
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
-//Agregados Dagger - Hilt
+//Agregados  Dagger - Hilt
     implementation ("com.google.dagger:hilt-android:2.52") //old 2.47
     kapt ("com.google.dagger:hilt-compiler:2.52") //old 2.47
 //Agregado Dagger - Hilt Compose
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0") //old 1.0.0
     implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1") //old 1.0.5
     implementation ("io.coil-kt:coil-compose:2.7.0") //old 2.4.0
-//Agregado LiveData compose//implementation ("androidx.compose.ui:ui-tooling")
+//Agregado LiveData compose
+//implementation ("androidx.compose.ui:ui-tooling")
     implementation ("androidx.compose.foundation:foundation")
     implementation ("androidx.compose.runtime:runtime-livedata")
 //Formularios
@@ -113,12 +113,12 @@ dependencies {
 // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
-//Manager permissions
-    implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
 //Corrutinas
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 //Location
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+//Manager permissions
+    implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
 
 //Para trabajar con camara
     val camerax_version = "1.5.0-alpha01" //1.2.3

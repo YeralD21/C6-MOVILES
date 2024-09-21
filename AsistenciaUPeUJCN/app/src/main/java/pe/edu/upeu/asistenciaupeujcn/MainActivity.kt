@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -61,35 +62,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val otorgarp = rememberMultiplePermissionsState(permissions = listOf(
-                android.Manifest.permission.ACCESS_NETWORK_STATE,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.CAMERA,
-            ))
-            LaunchedEffect(true){
-                if (otorgarp.allPermissionsGranted){
-                    Toast.makeText(this@MainActivity, "Permiso concedido",
-                        Toast.LENGTH_SHORT).show()
-                }else{if (otorgarp.shouldShowRationale){
-                    Toast.makeText(this@MainActivity, "La aplicacion requiereeste permiso",
-                            Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(this@MainActivity, "El permiso fue denegado", Toast.LENGTH_SHORT).show()
-                }
-                    otorgarp.launchMultiplePermissionRequest()
-                }
-                Toast.makeText(this@MainActivity,
-                    "Con:${isNetworkAvailable(this@MainActivity)}",Toast.LENGTH_LONG
-                ).show()
-            }
 
             val themeType= remember{ mutableStateOf(ThemeType.RED) }
             val darkThemex= isNight()
             val darkTheme = remember { mutableStateOf(darkThemex) }
             val colorScheme=when(themeType.value){
                 ThemeType.PURPLE->{if (darkTheme.value) DarkPurpleColors
-                    else LightPurpleColors}
+                else
+                    LightPurpleColors}
                 ThemeType.RED->{if (darkTheme.value) DarkRedColors else
                     LightRedColors}
                 ThemeType.GREEN->{if (darkTheme.value) DarkGreenColors
@@ -97,9 +77,41 @@ class MainActivity : ComponentActivity() {
                     LightGreenColors}
                 else->{LightRedColors}
             }
+            val otorgarp = rememberMultiplePermissionsState(permissions =
+            listOf(
+                android.Manifest.permission.ACCESS_NETWORK_STATE,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.CAMERA,
+            ))
+            LaunchedEffect(true) {
+                if (otorgarp.allPermissionsGranted) {
+                    Toast.makeText(
+                        this@MainActivity, "Permiso concedido",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    if (otorgarp.shouldShowRationale) {
+                        Toast.makeText(
+                            this@MainActivity, "La aplicacion requiereeste permiso",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "El permiso fue denegado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    otorgarp.launchMultiplePermissionRequest()
+                }
+                Toast.makeText(
+                    this@MainActivity,
+                    "Con:${isNetworkAvailable(this@MainActivity)}", Toast.LENGTH_LONG
+                ).show()
+            }
+
             TokenUtils.CONTEXTO_APPX=this@MainActivity
-
-
             AsistenciaUPeUJCNTheme(colorScheme = colorScheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -115,29 +127,11 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                }
-                */
+                }*/
             }
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AsistenciaUPeUJCNTheme(colorScheme = DarkGreenColors) {
-        Greeting("Android")
-    }
-}
-
 
 @Composable
 fun MainScreen(
@@ -145,7 +139,8 @@ fun MainScreen(
     darkMode: MutableState<Boolean>,
     themeType: MutableState<ThemeType>
 ) {
-    val drawerState = rememberDrawerState(initialValue =DrawerValue.Closed)
+    val drawerState = rememberDrawerState(initialValue =
+    DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val openDialog = remember { mutableStateOf(false) }
     val navigationItems = listOf(
@@ -155,8 +150,8 @@ fun MainScreen(
         Destinations.Pantalla4,
         Destinations.Pantalla5,
         Destinations.ActividadUI,
-        Destinations.PantallaQRHome,
-//Destinations.PantallaQR
+        //Destinations.MaterialesxUI,
+        Destinations.PantallaQRHome
     )
     val navigationItems2 = listOf(
         Destinations.Pantalla1,
@@ -177,7 +172,7 @@ fun MainScreen(
                 navigationItems)
         },
         drawerState = drawerState) {
-        val snackbarHostState = remember {SnackbarHostState() }
+        val snackbarHostState = remember { SnackbarHostState() }
         val snackbarMessage = "Succeed!"
         val showSnackbar = remember { mutableStateOf(false) }
         val context = LocalContext.current
@@ -188,14 +183,13 @@ fun MainScreen(
             ) {
                 val toast = Toast.makeText(context, "Hola Mundo",
                         Toast.LENGTH_LONG) // in Activity
-                toast.view!!.getBackground().setColorFilter(
-                    Color.CYAN,
-                    PorterDuff.Mode.SRC_IN)
+                toast.view!!.getBackground().setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_IN)
                 toast.show()
             },
             FabItem(
                 Icons.Filled.Favorite,
-                "Favorite") { /*TODO*/ }
+                "Favorite"
+            ) { /*TODO*/ }
         )
         Scaffold(
             topBar = { CustomTopAppBar(
@@ -206,8 +200,8 @@ fun MainScreen(
                 scope = scope,
                 scaffoldState = drawerState,
                 openDialog={openDialog.value=true}
-            ) }
-            , modifier = Modifier,
+            )
+            }, modifier = Modifier,
             /*floatingActionButton = {
             MultiFloatingActionButton(
             navController=navController,
@@ -219,7 +213,7 @@ fun MainScreen(
             floatingActionButtonPosition = FabPosition.End,
             bottomBar = { BottomAppBar {
             BottomNavigationBar(navigationItems2,
-            navController =
+navController =
             navController)
             }}*/
         ) {
@@ -229,4 +223,21 @@ fun MainScreen(
     }
     Dialog(showDialog = openDialog.value, dismissDialog = {
         openDialog.value = false })
+}
+
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    AsistenciaUPeUJCNTheme(colorScheme = LightPurpleColors) {
+        Greeting("Android")
+    }
 }
