@@ -8,7 +8,7 @@
 PRODUCT_NAME = app_flutter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = pe.edu.upeu.appFlutter
+PRODUCT_BUNDLE_IDENTIFIER = com.example.appFlutter
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 pe.edu.upeu. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.

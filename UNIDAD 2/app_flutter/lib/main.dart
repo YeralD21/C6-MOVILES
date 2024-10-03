@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/qr.dart';
+import 'package:app_flutter/qr.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MaterialApp(home: MyApp()));
 /*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
